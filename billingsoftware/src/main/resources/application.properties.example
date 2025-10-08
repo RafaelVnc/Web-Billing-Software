@@ -1,0 +1,8 @@
+# The JDBC URL for connecting to the MySQL database "billing_app" on the local machine
+spring.datasource.url=jdbc:mysql://localhost:3306/billing_app
+
+# Placeholder for the database username; replace with the actual user in your local application.properties
+spring.datasource.username=DB_USERNAME
+
+# Placeholder for the database password; replace with the actual password in your local application.properties
+spring.datasource.password=DB_PASSWORD
