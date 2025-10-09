@@ -6,3 +6,18 @@ spring.datasource.username=DB_USERNAME
 
 # Placeholder for the database password; replace with the actual password in your local application.properties
 spring.datasource.password=DB_PASSWORD
+
+# Hibernate setting: automatically updates the database schema to match the entity classes.
+# Options include: none, validate, update, create, create-drop.
+spring.jpa.hibernate.ddl-auto=update
+
+# The base context path for the application’s REST API endpoints
+server.servlet.context-path=/api/v1.0
+
+# AWS credentials for accessing S3 services. Fill in with your AWS IAM user's access key and secret key.
+aws.access.key=
+aws.secret.key=
+# AWS region where your resources (like S3 buckets) are located, e.g., "us-east-1", "sa-east-1"
+aws.region=
+# Name of the AWS S3 bucket where application files (e.g., images, documents) will be stored
+aws.bucket.name=
