@@ -1,7 +1,11 @@
+import { AppContext } from '../../context/AppContext.jsx';
 import './Explore.css';
+import { useContext } from 'react';
 
 
 const Explore = () => {
+  const {categories} = useContext(AppContext);
+  console.log(categories);
   return (
     <div className="explore-container text-light">
       <div className="left-column">
