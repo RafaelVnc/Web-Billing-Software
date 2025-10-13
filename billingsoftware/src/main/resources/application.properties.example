@@ -21,3 +21,6 @@ aws.secret.key=
 aws.region=
 # Name of the AWS S3 bucket where application files (e.g., images, documents) will be stored
 aws.bucket.name=
+
+# Set your JWT secret key here
+jwt.secret.key=
