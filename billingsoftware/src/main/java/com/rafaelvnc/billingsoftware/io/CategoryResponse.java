@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Builder
 public class CategoryResponse {
 
-    private String categotyId;
+    private String categoryId;
     private String name;
     private String description;
     private String bgColor;

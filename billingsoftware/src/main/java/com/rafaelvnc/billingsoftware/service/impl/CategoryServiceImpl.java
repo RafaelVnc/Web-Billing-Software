@@ -48,7 +48,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private CategoryResponse convertToResponse(CategoryEntity newCategory) {
         return CategoryResponse.builder()
-                .categotyId(newCategory.getCategoryId())
+                .categoryId(newCategory.getCategoryId())
                 .name(newCategory.getName())
                 .description(newCategory.getDescription())
                 .bgColor(newCategory.getBgColor())

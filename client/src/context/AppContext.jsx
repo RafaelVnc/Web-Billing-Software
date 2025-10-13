@@ -6,12 +6,12 @@ export const AppContext = createContext(null);
 
 export const AppContextProvider = (props) => {
 
-    const [categories, setcategories] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         async function loadData() {
             const response = await fetchCategories();
-            setcategories(response.data);
+            setCategories(response.data);
         }
         
         loadData();
@@ -19,7 +19,7 @@ export const AppContextProvider = (props) => {
 
     const contextValue = {
         categories,
-        setcategories
+        setCategories
     }
 
     return <AppContext.Provider value={contextValue}> 
