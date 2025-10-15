@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {assets} from "../../assets/assets.js";
 import toast from "react-hot-toast";
 import { AppContext } from "../../context/AppContext.jsx";

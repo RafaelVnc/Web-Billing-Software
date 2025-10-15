@@ -1,4 +1,68 @@
+import { useContext, useState } from "react";
+import { assets } from "../../assets/assets.js";
+import { AppContext } from "../../context/AppContext.jsx";
+import { addItem } from "../../Service/ItemService.js";
+import toast from "react-hot-toast";
+
 const ItemForm = () => {
+  const {categories, setItemsData, itemsData, setCategories} = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(false);
+  const [data, setData] = useState({
+    name: "",
+    categoryId: "",
+    price: "",
+    description: "",
+  });
+
+  const onChangeHandler = (e) => {
+      const value = e.target.value;
+      const name = e.target.name;
+      setData((data) => ({...data, [name]: value}));
+  }
+
+  const onSubmitHandler = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("item", JSON.stringify(data));
+      formData.append("file", image);
+      try {
+          if (!image) {
+            toast.error("Item image is required");
+            return;
+          } 
+          if (!data.name) {
+            toast.error("Item name is required");
+            return;
+          }
+          if (!data.price) {
+            toast.error("Item price is required");
+            return;
+          }
+          const response = await addItem(formData);
+          if (response.status === 201) {
+            setItemsData([...itemsData, response.data]);
+            setCategories((prevCategories) => prevCategories.map((category) => category.categoryId === data.categoryId ? {...category, items: category.items + 1} : category))
+            toast.success("Item added successfully");
+            setData({
+              name: "",
+              description: "",
+              price: "",
+              categoryId: "",
+            })
+            setImage(false);
+          } else {
+            toast.error("Unable to add item");
+          }
+      } catch (error) {
+          console.log(error);
+          toast.error("Unable to add item");
+      } finally {
+          setLoading(false);
+      }
+  }
+
   return (
     <div
       className="item-form-container"
@@ -6,19 +70,20 @@ const ItemForm = () => {
     >
       <div className="mx-2 mt-2">
         <div className="row">
-          <div className="card col-md-8 form-container">
+          <div className="card col-md-12 form-container">
             <div className="card-body">
-              <form>
+              <form onSubmit={onSubmitHandler}>
                 <div className="mb-3">
                   <label htmlFor="image" className="form-label">
-                    <img src="https://placehold.co/48x48" alt="" width={48} />
+                    <img src={image ? URL.createObjectURL(image) : assets.upload} alt="" width={48} />
                   </label>
                   <input
                     type="file"
                     name="image"
                     id="image"
                     className="form-control"
-                    hidden
+                    hidden 
+                    onChange={(e) => setImage(e.target.files[0])}
                   />
                 </div>
                 <div className="mb-3">
@@ -31,6 +96,8 @@ const ItemForm = () => {
                     id="name"
                     className="form-control"
                     placeholder="Item Name"
+                    onChange={onChangeHandler}
+                    value={data.name}
                   />
                 </div>
                 <div className="mb-3">
@@ -38,13 +105,16 @@ const ItemForm = () => {
                     Category
                   </label>
                   <select
-                    name="category"
-                    id="category"
+                    name="categoryId"
+                    id="categoryId"
                     className="form-control"
+                    onChange={onChangeHandler}
+                    value={data.categoryId}
                   >
                     <option value="">---SELECT CATEGORY---</option>
-                    <option value="Category 1">Category 1</option>
-                    <option value="Category 2">Category 2</option>
+                    {categories.map((category, index) => (
+                      <option key={index} value={category.categoryId}>{category.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="mb-3">
@@ -57,6 +127,8 @@ const ItemForm = () => {
                     id="price"
                     className="form-control"
                     placeholder="$100.00"
+                    onChange={onChangeHandler}
+                    value={data.price}
                   />
                 </div>
                 <div className="mb-3">
@@ -69,10 +141,12 @@ const ItemForm = () => {
                     id="description"
                     className="form-control"
                     placeholder="Write content here..."
+                    onChange={onChangeHandler}
+                    value={data.description}
                   ></textarea>
                 </div>
-                <button type="submit" className="btn btn-warning w-100">
-                  Save
+                <button type="submit" className="btn btn-warning w-100" disabled={loading}>
+                  {loading ? "Loading..." : "Save"}
                 </button>
               </form>
             </div>
