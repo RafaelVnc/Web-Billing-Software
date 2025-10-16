@@ -13,10 +13,16 @@ export const AppContextProvider = (props) => {
 
     useEffect(() => {
         async function loadData() {
-            const response = await fetchCategories();
-            const itemResponse = await fetchItems();
-            setCategories(response.data);
-            setItemsData(itemResponse.data);
+            if (localStorage.getItem("token") && localStorage.getItem("role")){
+                setAuthData(
+                    localStorage.getItem("token"),
+                    localStorage.getItem("role")
+                );
+                const response = await fetchCategories();
+                const itemResponse = await fetchItems();
+                setCategories(response.data);
+                setItemsData(itemResponse.data);
+            }
         }
         
         loadData();
