@@ -7,6 +7,7 @@ import ManageItems from "./pages/ManageItems/ManageItems.jsx";
 import Explore from "./pages/Explore/Explore.jsx";
 import Login from "./pages/Login/Login.jsx";
 import { Toaster } from "react-hot-toast";
+import OrderHistory from "./pages/OrderHistory/OrderHistory.jsx";
 
 
 
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/users" element={<ManageUsers />} />
             <Route path="/items" element={<ManageItems />} />
             <Route path="/explore" element={<Explore />} /> 
+            <Route path="/orders" element={<OrderHistory />} /> 
         </Routes>
     </div>
   );
