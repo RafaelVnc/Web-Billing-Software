@@ -3,6 +3,8 @@ package com.rafaelvnc.billingsoftware.service;
 import com.rafaelvnc.billingsoftware.io.OrderRequest;
 import com.rafaelvnc.billingsoftware.io.OrderResponse;
 
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderService {
@@ -12,4 +14,10 @@ public interface OrderService {
     void deleteOrder(String orderId);
 
     List<OrderResponse> getLatestOrders();
+
+    Double sumSalesByDate(LocalDate date);
+
+    Long countByOrderDate(LocalDate date);
+
+    List<OrderResponse> findRecentOrders();
 }

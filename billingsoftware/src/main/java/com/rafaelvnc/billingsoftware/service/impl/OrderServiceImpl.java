@@ -9,8 +9,11 @@ import com.rafaelvnc.billingsoftware.io.PaymentMethod;
 import com.rafaelvnc.billingsoftware.repository.OrderEntityRepository;
 import com.rafaelvnc.billingsoftware.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -99,5 +102,23 @@ public class OrderServiceImpl implements OrderService {
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public Double sumSalesByDate(LocalDate date) {
+        return orderEntityRepository.sumSalesByDate(date);
+    }
+
+    @Override
+    public Long countByOrderDate(LocalDate date) {
+        return orderEntityRepository.countByOrderDate(date);
+    }
+
+    @Override
+    public List<OrderResponse> findRecentOrders() {
+        return orderEntityRepository.findRecentOrders(PageRequest.of(0, 5))
+                .stream()
+                .map(orderEntity -> convertToResponse(orderEntity))
+                .collect(Collectors.toList());
     }
 }
