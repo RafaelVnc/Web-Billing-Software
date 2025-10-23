@@ -70,7 +70,7 @@ const CategoryForm = () => {
               </div>
               <div className="mb-3">
                 <label htmlFor="name" className="form-label">Name</label>
-                <input type="text"  name="name" id="name" className="form-control" placeholder="Category Name" onChange={onChangeHandler} value={data.name}/>
+                <input type="text"  name="name" id="name" className="form-control" placeholder="Category Name" onChange={onChangeHandler} value={data.name} required/>
               </div>
               <div className="mb-3">
                 <label htmlFor="description" className="form-label">Description</label>
@@ -79,7 +79,7 @@ const CategoryForm = () => {
               <div className="mb-3">
                 <label htmlFor="bgcolor" className="form-label">Background color</label>
                 <br/>
-                <input type="color" name="bgColor" id="bgcolor" placeholder="#ffffff" onChange={onChangeHandler} value={data.bgColor}/>
+                <input type="color" name="bgColor" id="bgcolor" placeholder="#ffffff" onChange={onChangeHandler} value={data.bgColor} />
               </div>
               <button type="submit" disabled={loading} className="btn btn-warning w-100">{loading ? "Loading..." : "Submit"}</button>
             </form>
