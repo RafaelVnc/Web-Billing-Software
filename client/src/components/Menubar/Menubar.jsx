@@ -8,7 +8,7 @@ import { AppContext } from '../../context/AppContext.jsx';
 const Menubar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const{ setAuthData } = useContext(AppContext);
+  const{ setAuthData, auth } = useContext(AppContext);
   const logout = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("role");
@@ -19,6 +19,8 @@ const Menubar = () => {
   const isActive = (path) => {
     return location.pathname === path;
   }
+
+  const isAdmin = auth.role === "ROLE_ADMIN";
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-2">
@@ -52,21 +54,27 @@ const Menubar = () => {
               Explore
             </Link>
           </li>
-          <li className="nav-item">
-            <Link className={`nav-link ${isActive('/items') ? 'fw-bold text-warning' : ''}`} to="/items">
-              Manage Items
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className={`nav-link ${isActive('/category') ? 'fw-bold text-warning' : ''}`} to="/category">
-              Manage Categories
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className={`nav-link ${isActive('/users') ? 'fw-bold text-warning' : ''}`} to="/users">
-              Manage Users
-            </Link>
-          </li>
+          {
+            isAdmin && (
+              <>
+                <li className="nav-item">
+                  <Link className={`nav-link ${isActive('/items') ? 'fw-bold text-warning' : ''}`} to="/items">
+                    Manage Items
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className={`nav-link ${isActive('/category') ? 'fw-bold text-warning' : ''}`} to="/category">
+                    Manage Categories
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className={`nav-link ${isActive('/users') ? 'fw-bold text-warning' : ''}`} to="/users">
+                    Manage Users
+                  </Link>
+                </li>
+              </>
+            )
+          }
           <li className="nav-item">
             <Link className={`nav-link ${isActive('/orders') ? 'fw-bold text-warning' : ''}`} to="/orders">
               Order History
